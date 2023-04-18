@@ -27,10 +27,15 @@ function setCanvasSize(){
 function startGame(){ //tamaño de los elementos  
 game.font = elementsSize +'px Verdana';  //tamaño de la bomba, X
 game.textAlign = ""
-for (let a = 0; a < 10 ; a++) {
-    for (let i = 0; i < 10 ; i++) {
-        game.fillText(emojis['X'], elementsSize *i ,elementsSize*a);
 
+const map = maps[0];
+const mapRows = maps[0].trim().split('\n'); //trim=limpia los espacion .split=tener en cuenta para la separacion en este caso el salto de lines \n
+const mapRowsCols = mapRows.map(row => row.trim().split(''));//para recorrer el arreglo por cada elemento.
+
+//recorrer el arrays
+for (let row = 1; row <= 10 ; row++) {
+    for (let col = 0; col < 10 ; col++) {
+        game.fillText(emojis[mapRowsCols[row-1][col]], elementsSize *col ,elementsSize *row);    
     }
 }
 }
