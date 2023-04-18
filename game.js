@@ -27,9 +27,11 @@ function setCanvasSize(){
 function startGame(){ //tamaño de los elementos  
 game.font = elementsSize +'px Verdana';  //tamaño de la bomba, X
 game.textAlign = ""
-for (let i = 0; i < 10 ; i++) {
-    game.fillText(emojis['X'], elementsSize *i ,elementsSize);
+for (let a = 0; a < 10 ; a++) {
+    for (let i = 0; i < 10 ; i++) {
+        game.fillText(emojis['X'], elementsSize *i ,elementsSize*a);
 
+    }
 }
 }
 
