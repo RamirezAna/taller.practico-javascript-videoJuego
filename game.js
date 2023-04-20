@@ -9,6 +9,12 @@ const btnDown = document.querySelector('#down');
 let elementsSize;
 let canvasSize;
 
+//crear nuestro objeto/variable para nuestro posicion de jugador
+const playerPosition = {
+ x: undefined,
+ y:undefined,
+}
+
 window.addEventListener('load',setCanvasSize); //llamar la funion starGame , setCanvasSize
 window.addEventListener('resize',setCanvasSize); //evento resive; cambio de tamaño (achicamos o voltaemos) resize ( se ponuncia risai)
 
@@ -43,13 +49,25 @@ mapRowsCols.forEach((row, rowIndex) => { //filas
         const emoji = emojis[col];
         const posX= elementsSize * (colIndex); //ubicacion de los objetos
         const posY= elementsSize * (rowIndex+1);  //ubicacion de los objetos      
+       
+        if (col == 'O'){
+            playerPosition.x = posX;
+            playerPosition.y =posY;
+        }
+         
         game.fillText(emoji, posX, posY);     
     });
 });
+
+movePlayer(); 
+}
+
+
+function movePlayer(){
+    game.fillText(emojis['PLAYER'], playerPosition.x, playerPosition.y);
 }
 
 window.addEventListener('keydown', moveTeclas); //movimientos de las reclas
-
 //movimientos de los botones
 btnUp.addEventListener('click', moveUp); 
 btnLeft.addEventListener('click', moveLeft);
@@ -65,10 +83,12 @@ function moveTeclas(event){
  else if(event.key =='ArrowDown') moveDown();
  }
 
-
+  
 
 function moveUp(){
-    console.log('arriba');
+    console.log('arriba');    
+    playerPosition.y -= elementsSize;
+    movePlayer();   
 }
 function moveLeft(){
     console.log('izquierda');
