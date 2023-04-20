@@ -42,6 +42,7 @@ const map = maps[0];
 const mapRows = map.trim().split('\n'); //trim=limpia los espacion .split=tener en cuenta para la separacion en este caso el salto de lines \n
 const mapRowsCols = mapRows.map(row => row.trim().split(''));//para recorrer el arreglo por cada elemento.
 
+game.clearRect(0,0,canvasSize, canvasSize);//clear limpieza
 //para recorrer el arreglo
 //forEach => recorrer un array
 mapRowsCols.forEach((row, rowIndex) => { //filas
@@ -50,9 +51,12 @@ mapRowsCols.forEach((row, rowIndex) => { //filas
         const posX= elementsSize * (colIndex); //ubicacion de los objetos
         const posY= elementsSize * (rowIndex+1);  //ubicacion de los objetos      
        
-        if (col == 'O'){
-            playerPosition.x = posX;
-            playerPosition.y =posY;
+        if (col == 'O'){ 
+            //limpieza de movimiento
+            if(!playerPosition.x && !playerPosition.y){ //comparacion para poder eliminar el jugador player cada vez que se mueva y no sea valos 0
+                playerPosition.x = posX;
+                playerPosition.y =posY;
+            }
         }
          
         game.fillText(emoji, posX, posY);     
@@ -83,20 +87,24 @@ function moveTeclas(event){
  else if(event.key =='ArrowDown') moveDown();
  }
 
-  
-
 function moveUp(){
     console.log('arriba');    
     playerPosition.y -= elementsSize;
-    movePlayer();   
+    startGame();    
 }
 function moveLeft(){
     console.log('izquierda');
+    playerPosition.x -= elementsSize;
+    startGame();  
 }
 function moveRight(){
     console.log('derecha');
+    playerPosition.x += elementsSize;
+    startGame();  
 }
 function moveDown(){
-    console.log('abajo');
+    console.log('abajo'); 
+    playerPosition.y += elementsSize;
+    startGame();  
 }
 
