@@ -1,6 +1,10 @@
 const canvas = document.querySelector('#game'); //seleccionar el elemento canva del html
 //acceder a los elementos del canvas, agregar un contexto
 const game = canvas.getContext('2d');
+const btnUp = document.querySelector('#up');
+const btnLeft = document.querySelector('#left');
+const btnRight = document.querySelector('#right');
+const btnDown = document.querySelector('#down');
 
 let elementsSize;
 let canvasSize;
@@ -42,14 +46,37 @@ mapRowsCols.forEach((row, rowIndex) => { //filas
         game.fillText(emoji, posX, posY);     
     });
 });
-
-//recorrer el arrays
-// for (let row = 1; row <= 10 ; row++) {
-//     for (let col = 0; col < 10 ; col++) {
-//         game.fillText(emojis[mapRowsCols[row-1][col]], elementsSize *col ,elementsSize *row);    
-//     }
-// }
 }
 
+window.addEventListener('keydown', moveTeclas); //movimientos de las reclas
 
+//movimientos de los botones
+btnUp.addEventListener('click', moveUp); 
+btnLeft.addEventListener('click', moveLeft);
+btnRight.addEventListener('click', moveRight);
+btnDown.addEventListener('click', moveDown);
+
+
+//if-else
+function moveTeclas(event){
+ if(event.key =='ArrowUp') moveUp();
+ else if(event.key =='ArrowLeft') moveLeft();
+ else if(event.key =='ArrowRight') moveRight();
+ else if(event.key =='ArrowDown') moveDown();
+ }
+
+
+
+function moveUp(){
+    console.log('arriba');
+}
+function moveLeft(){
+    console.log('izquierda');
+}
+function moveRight(){
+    console.log('derecha');
+}
+function moveDown(){
+    console.log('abajo');
+}
 
