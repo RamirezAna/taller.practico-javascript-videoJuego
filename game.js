@@ -87,24 +87,40 @@ function moveTeclas(event){
  else if(event.key =='ArrowDown') moveDown();
  }
 
-function moveUp(){
-    console.log('arriba');    
-    playerPosition.y -= elementsSize;
-    startGame();    
+function moveUp(){ 
+    if((playerPosition.y - elementsSize)<elementsSize){
+          console.log('ya no puedes moverte');
+    }else{
+        console.log('arriba');    
+        playerPosition.y -= elementsSize;
+        startGame(); 
+    }
 }
-function moveLeft(){
-    console.log('izquierda');
-    playerPosition.x -= elementsSize;
-    startGame();  
+function moveLeft(){ 
+    if((playerPosition.x - elementsSize)<elementsSize-(elementsSize*2)){
+        console.log('ya no puedes moverte');
+     }else{
+        console.log('izquierda');
+        playerPosition.x -= elementsSize;
+        startGame();  
+    }
 }
-function moveRight(){
+function moveRight(){ 
+    if((playerPosition.x + elementsSize)>canvasSize-elementsSize){
+        console.log('ya no puedes moverte');
+    }else{
     console.log('derecha');
     playerPosition.x += elementsSize;
     startGame();  
+    }
 }
-function moveDown(){
+function moveDown(){ 
+    if((playerPosition.y + elementsSize)>canvasSize){
+        console.log('ya no puedes moverte');
+    }else{
     console.log('abajo'); 
     playerPosition.y += elementsSize;
     startGame();  
+    }
 }
 
