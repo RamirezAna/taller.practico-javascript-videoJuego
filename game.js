@@ -9,6 +9,7 @@ const btnDown = document.querySelector('#down');
 let elementsSize;
 let canvasSize;
 let level = 0;
+let lives =3;
 
 //crear nuestro objeto/variable para nuestro posicion de jugador
 const playerPosition = {
@@ -115,12 +116,11 @@ function movePlayer(){
     });
     //si es true, significa que chocaste con el enemigo
     if(enemyCollision){ 
-        console.log('Chocaste contra un enemigo'); 
+        levelFail();//cuando choques, debes empezar de nuevo
     } 
 
     game.fillText(emojis['PLAYER'], playerPosition.x, playerPosition.y);
 }
-
 
 function levelWin(){
     console.log('Subiste de Nivel');
@@ -130,6 +130,19 @@ function levelWin(){
 
 function gameWin(){
     console.log('Juego terminado');
+}
+
+function levelFail(){   
+    console.log('Chocaste contra un enemigo'); 
+    lives--; //resta
+
+    if(lives <= 0){        
+        level=0; 
+        lives=3;
+    }
+    playerPosition.x = undefined;//undefined para volver a reiniciar las posiciones
+    playerPosition.y = undefined;
+    startGame();     
 }
 
 window.addEventListener('keydown', moveTeclas); //movimientos de las reclas
