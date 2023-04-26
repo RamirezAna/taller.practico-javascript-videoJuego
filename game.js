@@ -5,6 +5,7 @@ const btnUp = document.querySelector('#up');
 const btnLeft = document.querySelector('#left');
 const btnRight = document.querySelector('#right');
 const btnDown = document.querySelector('#down');
+const spanLives = document.querySelector('#lives');
 
 let elementsSize;
 let canvasSize;
@@ -57,6 +58,8 @@ function startGame(){ //tamaño de los elementos
 
     const mapRows = map.trim().split('\n'); //trim=limpia los espacion .split=tener en cuenta para la separacion en este caso el salto de lines \n
     const mapRowsCols = mapRows.map(row => row.trim().split(''));//para recorrer el arreglo por cada elemento.
+
+    mostrasVidas();
 
     game.clearRect(0,0,canvasSize, canvasSize);//clear limpieza
     enemyPositions = [];   //limpia 
@@ -136,6 +139,7 @@ function levelFail(){
     console.log('Chocaste contra un enemigo'); 
     lives--; //resta
 
+
     if(lives <= 0){        
         level=0; 
         lives=3;
@@ -143,6 +147,14 @@ function levelFail(){
     playerPosition.x = undefined;//undefined para volver a reiniciar las posiciones
     playerPosition.y = undefined;
     startGame();     
+}
+
+function mostrasVidas(){
+    //crea un arreglo de la cantidad de corazones segun la vida
+    const heartArray= Array(lives).fill(emojis['HEART']) //crea un array con la cantidad de elemento que le pasamos. ejemplo array[1,2,3] crea un array con 3 posiciones como ejemplo
+   spanLives.innerHTML= "";
+   heartArray.forEach(heart => spanLives.append(heart));
+ //  spanLives.innerHTML= heartArray;
 }
 
 window.addEventListener('keydown', moveTeclas); //movimientos de las reclas
