@@ -20,6 +20,9 @@ const giftPosition ={
     y: undefined,
 };
 
+//variable para detectar las colisiones de los enemigos (bombas)
+let enemyPositions = [];
+
 window.addEventListener('load',setCanvasSize); //llamar la funcion starGame , setCanvasSize
 window.addEventListener('resize',setCanvasSize); //evento resive; cambio de tamaño (achicamos o voltaemos) resize ( se ponuncia risai)
 
@@ -40,17 +43,19 @@ function setCanvasSize(){
 }
 
 function startGame(){ //tamaño de los elementos  
-game.font = elementsSize +'px Verdana';  //tamaño de la bomba, X
-game.textAlign = ""
+    game.font = elementsSize +'px Verdana';  //tamaño de la bomba, X
+    game.textAlign = ""
 
-const map = maps[0];
-const mapRows = map.trim().split('\n'); //trim=limpia los espacion .split=tener en cuenta para la separacion en este caso el salto de lines \n
-const mapRowsCols = mapRows.map(row => row.trim().split(''));//para recorrer el arreglo por cada elemento.
+    const map = maps[0];
+    const mapRows = map.trim().split('\n'); //trim=limpia los espacion .split=tener en cuenta para la separacion en este caso el salto de lines \n
+    const mapRowsCols = mapRows.map(row => row.trim().split(''));//para recorrer el arreglo por cada elemento.
 
-game.clearRect(0,0,canvasSize, canvasSize);//clear limpieza
-//para recorrer el arreglo
-//forEach => recorrer un array
-mapRowsCols.forEach((row, rowIndex) => { //filas
+    game.clearRect(0,0,canvasSize, canvasSize);//clear limpieza
+    enemyPositions = [];   //limpia 
+
+    //para recorrer el arreglo
+    //forEach => recorrer un array
+    mapRowsCols.forEach((row, rowIndex) => { //filas
     row.forEach((col, colIndex) =>{
         const emoji = emojis[col];
         const posX= elementsSize * (colIndex); //ubicacion de los objetos
@@ -65,6 +70,11 @@ mapRowsCols.forEach((row, rowIndex) => { //filas
         }else if(col == 'I'){ //position de regalito, obtener position
             giftPosition.x = posX;
             giftPosition.y = posY;
+        }else if (col == 'X'){ // position de la bomba
+            enemyPositions.push({
+                x: posX,
+                y: posY,
+            });
         }
  
         game.fillText(emoji, posX, posY);     
@@ -87,9 +97,19 @@ function movePlayer(){
     
     if(giftCollision){ 
             console.log('Subiste de nivel'); 
-    }else{ 
-        console.log('NO');
-    }
+    } 
+
+    //find = verificar segun la condicion que se vaya dentro
+    const enemyCollision = enemyPositions.find(enemy => {
+        const enemyCollisionX= enemy.x == playerPosition.x;
+        const enemyCollisionY= enemy.y == playerPosition.y;
+
+        return enemyCollisionX && enemyCollisionY;//retornara true si solo son iguales
+    });
+    //si es true, significa que chocaste con el enemigo
+    if(enemyCollision){ 
+        console.log('Chocaste contra un enemigo'); 
+    } 
 
     game.fillText(emojis['PLAYER'], playerPosition.x, playerPosition.y);
 }
