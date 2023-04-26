@@ -14,8 +14,13 @@ const playerPosition = {
  x: undefined,
  y:undefined,
 }
+//para control de cuando se choca contra otro objeto el jugador
+const giftPosition ={
+    x: undefined,
+    y: undefined,
+};
 
-window.addEventListener('load',setCanvasSize); //llamar la funion starGame , setCanvasSize
+window.addEventListener('load',setCanvasSize); //llamar la funcion starGame , setCanvasSize
 window.addEventListener('resize',setCanvasSize); //evento resive; cambio de tamaño (achicamos o voltaemos) resize ( se ponuncia risai)
 
 function setCanvasSize(){  
@@ -57,8 +62,11 @@ mapRowsCols.forEach((row, rowIndex) => { //filas
                 playerPosition.x = posX;
                 playerPosition.y =posY;
             }
+        }else if(col == 'I'){ //position de regalito, obtener position
+            giftPosition.x = posX;
+            giftPosition.y = posY;
         }
-         
+ 
         game.fillText(emoji, posX, posY);     
     });
 });
@@ -68,6 +76,21 @@ movePlayer();
 
 
 function movePlayer(){
+
+    console.log(playerPosition.x);
+    console.log(playerPosition.y);
+
+    //toFixed es para redondear los decimales.
+    const giftCollisionX = playerPosition.x.toFixed(3) == giftPosition.x.toFixed(3);
+    const giftCollisionY = playerPosition.y.toFixed(3) == giftPosition.y.toFixed(3);
+    const giftCollision = giftCollisionX && giftCollisionY;//funcion de comparacion true/false
+    
+    if(giftCollision){ 
+            console.log('Subiste de nivel'); 
+    }else{ 
+        console.log('NO');
+    }
+
     game.fillText(emojis['PLAYER'], playerPosition.x, playerPosition.y);
 }
 
