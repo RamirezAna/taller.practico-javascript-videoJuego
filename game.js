@@ -8,6 +8,7 @@ const btnDown = document.querySelector('#down');
 
 let elementsSize;
 let canvasSize;
+let level = 0;
 
 //crear nuestro objeto/variable para nuestro posicion de jugador
 const playerPosition = {
@@ -46,7 +47,13 @@ function startGame(){ //tamaño de los elementos
     game.font = elementsSize +'px Verdana';  //tamaño de la bomba, X
     game.textAlign = ""
 
-    const map = maps[0];
+    const map = maps[level];
+
+    if(!map){
+        gameWin();//funcion de fin del juego
+        return;//termina
+    }
+
     const mapRows = map.trim().split('\n'); //trim=limpia los espacion .split=tener en cuenta para la separacion en este caso el salto de lines \n
     const mapRowsCols = mapRows.map(row => row.trim().split(''));//para recorrer el arreglo por cada elemento.
 
@@ -96,7 +103,7 @@ function movePlayer(){
     const giftCollision = giftCollisionX && giftCollisionY;//funcion de comparacion true/false
     
     if(giftCollision){ 
-            console.log('Subiste de nivel'); 
+            levelWin();//funcion de subir de nivel
     } 
 
     //find = verificar segun la condicion que se vaya dentro
@@ -112,6 +119,17 @@ function movePlayer(){
     } 
 
     game.fillText(emojis['PLAYER'], playerPosition.x, playerPosition.y);
+}
+
+
+function levelWin(){
+    console.log('Subiste de Nivel');
+    level++;
+    startGame();
+}
+
+function gameWin(){
+    console.log('Juego terminado');
 }
 
 window.addEventListener('keydown', moveTeclas); //movimientos de las reclas
