@@ -6,11 +6,16 @@ const btnLeft = document.querySelector('#left');
 const btnRight = document.querySelector('#right');
 const btnDown = document.querySelector('#down');
 const spanLives = document.querySelector('#lives');
+const spanTime = document.querySelector('#time');
 
 let elementsSize;
 let canvasSize;
 let level = 0;
 let lives =3;
+
+let timeStart;
+let timePlayer;
+let timeInterval;
 
 //crear nuestro objeto/variable para nuestro posicion de jugador
 const playerPosition = {
@@ -56,10 +61,15 @@ function startGame(){ //tamaño de los elementos
         return;//termina
     }
 
+    if(!timeStart){
+        timeStart = Date.now();
+        timeInterval = setInterval(mostrarTiempo, 100);
+    }
+
     const mapRows = map.trim().split('\n'); //trim=limpia los espacion .split=tener en cuenta para la separacion en este caso el salto de lines \n
     const mapRowsCols = mapRows.map(row => row.trim().split(''));//para recorrer el arreglo por cada elemento.
 
-    mostrasVidas();
+    mostrasVidas();//muestra las vidas
 
     game.clearRect(0,0,canvasSize, canvasSize);//clear limpieza
     enemyPositions = [];   //limpia 
@@ -133,6 +143,7 @@ function levelWin(){
 
 function gameWin(){
     console.log('Juego terminado');
+    clearInterval(timeInterval); //para mi tiempo al llegar a la meta
 }
 
 function levelFail(){   
@@ -143,6 +154,7 @@ function levelFail(){
     if(lives <= 0){        
         level=0; 
         lives=3;
+        timeStart = undefined;//cuando pieder las vidas vuelve a resetear el tiempo
     }
     playerPosition.x = undefined;//undefined para volver a reiniciar las posiciones
     playerPosition.y = undefined;
@@ -152,9 +164,13 @@ function levelFail(){
 function mostrasVidas(){
     //crea un arreglo de la cantidad de corazones segun la vida
     const heartArray= Array(lives).fill(emojis['HEART']) //crea un array con la cantidad de elemento que le pasamos. ejemplo array[1,2,3] crea un array con 3 posiciones como ejemplo
-   spanLives.innerHTML= "";
-   heartArray.forEach(heart => spanLives.append(heart));
+   spanLives.innerHTML= "";//limpiar antes de cargar
+   heartArray.forEach(heart => spanLives.append(heart));//mostrar en html
  //  spanLives.innerHTML= heartArray;
+}
+
+function mostrarTiempo(){
+    spanTime.innerHTML = Date.now() - timeStart;
 }
 
 window.addEventListener('keydown', moveTeclas); //movimientos de las reclas
