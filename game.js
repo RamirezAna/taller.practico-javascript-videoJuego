@@ -31,6 +31,11 @@ const giftPosition ={
     y: undefined,
 };
 
+//funcion de redondeo de decimales p/implementar
+function fixNumber(n){
+    return Number(n.toFixed(0))
+}
+
 //variable para detectar las colisiones de los enemigos (bombas)
 let enemyPositions = [];
 
@@ -45,11 +50,15 @@ function setCanvasSize(){
         canvasSize = window.innerHeight * 0.8;
     }
     
+    canvasSize = Number(canvasSize.toFixed(0));//mi tamaño de canva  limitamos los valores decimales
+
     canvas.setAttribute('width', canvasSize);
     canvas.setAttribute('height', canvasSize);
      
-    
     elementsSize =(canvasSize /10)-1;
+    
+    playerPosition.x = undefined;
+    playerPosition.y = undefined;
     startGame();
 }
 

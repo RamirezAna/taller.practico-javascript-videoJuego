@@ -45,7 +45,14 @@ button:not(:last-child){
     width: 80%;
     max-width: 460px;
 }
+
+p{
+    display: block;
+    margin: 0;
+    width: 100%;
+}
+
 @media (max-width: 440px){
-   button {margin-top: 25px;}
+   button {margin-top: 5px;}
    #up, #down {margin-left: 100%;; margin-right: 100%;}
 }
