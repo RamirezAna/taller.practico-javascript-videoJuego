@@ -9,6 +9,8 @@ const spanLives = document.querySelector('#lives');
 const spanTime = document.querySelector('#time');
 const spanRecord = document.querySelector('#record');
 const pResult = document.querySelector('#result');
+const btns = document.querySelector('.btns');
+const reloadGame = document.querySelector('#reload');
 
 
 let elementsSize;
@@ -19,6 +21,7 @@ let lives =3;
 let timeStart;
 let timePlayer;
 let timeInterval;
+let localRecord = +(localStorage.getItem('localRecord'));
 
 //crear nuestro objeto/variable para nuestro posicion de jugador
 const playerPosition = {
@@ -172,6 +175,9 @@ function gameWin(){
         localStorage.setItem('record_time', playerTime);
         pResult.innerHTML = 'BIEN!!';
     }
+    startTime = undefined;
+    btns.classList.toggle('hide');
+    reloadGame.classList.toggle('hide');
 }
 
 function levelFail(){   
@@ -184,6 +190,7 @@ function levelFail(){
         lives=3;
         timeStart = undefined;//cuando pieder las vidas vuelve a resetear el tiempo
     }
+
     playerPosition.x = undefined;//undefined para volver a reiniciar las posiciones
     playerPosition.y = undefined;
     startGame();     
@@ -212,6 +219,10 @@ btnLeft.addEventListener('click', moveLeft);
 btnRight.addEventListener('click', moveRight);
 btnDown.addEventListener('click', moveDown);
 
+//boton de reiniciar
+reloadGame.addEventListener('click', ()=> {
+    location.reload()
+})
 
 //if-else
 function moveTeclas(event){

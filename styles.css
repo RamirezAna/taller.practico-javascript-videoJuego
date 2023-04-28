@@ -52,6 +52,10 @@ p{
     width: 100%;
 }
 
+.hide {
+    display: none;
+  }
+
 @media (max-width: 440px){
    button {margin-top: 5px;}
    #up, #down {margin-left: 100%;; margin-right: 100%;}
