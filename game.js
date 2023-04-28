@@ -7,6 +7,9 @@ const btnRight = document.querySelector('#right');
 const btnDown = document.querySelector('#down');
 const spanLives = document.querySelector('#lives');
 const spanTime = document.querySelector('#time');
+const spanRecord = document.querySelector('#record');
+const pResult = document.querySelector('#result');
+
 
 let elementsSize;
 let canvasSize;
@@ -64,6 +67,7 @@ function startGame(){ //tamaño de los elementos
     if(!timeStart){
         timeStart = Date.now();
         timeInterval = setInterval(mostrarTiempo, 100);
+        showRecord();//visualiza el record
     }
 
     const mapRows = map.trim().split('\n'); //trim=limpia los espacion .split=tener en cuenta para la separacion en este caso el salto de lines \n
@@ -144,6 +148,21 @@ function levelWin(){
 function gameWin(){
     console.log('Juego terminado');
     clearInterval(timeInterval); //para mi tiempo al llegar a la meta
+ 
+    const recordTime = localStorage.getItem('record_time');//consultar la variable de tiempo guardado
+    const playerTime = Date.now() - timeStart;
+
+    if(recordTime){
+        if(recordTime >= playerTime){
+            localStorage.setItem('record_time', playerTime);
+             pResult.innerHTML = 'SUPERASTE EL RECORD!!';
+        }else{
+           pResult.innerHTML = 'No superaste el record!';
+        }
+    }else{
+        localStorage.setItem('record_time', playerTime);
+        pResult.innerHTML = 'BIEN!!';
+    }
 }
 
 function levelFail(){   
@@ -171,6 +190,10 @@ function mostrasVidas(){
 
 function mostrarTiempo(){
     spanTime.innerHTML = Date.now() - timeStart;
+}
+
+function showRecord(){
+    spanRecord.innerHTML = localStorage.getItem('record_time');
 }
 
 window.addEventListener('keydown', moveTeclas); //movimientos de las reclas
